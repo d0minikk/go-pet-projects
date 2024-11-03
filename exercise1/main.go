@@ -11,16 +11,18 @@ import (
 	"fmt"
 )
 
-func move_zeros_to_end(arr []int) {
+func moveZerosToEnd(arr []int) {
 	fill_index := 0
 
-	for i := 0; i < len(arr); i++ {
-		if arr[i] != 0 {
-			arr[fill_index] = arr[i]
+	// Go thourgh first partion and set non-zero elements
+	for _, value := range arr {
+		if value != 0 {
+			arr[fill_index] = value
 			fill_index++
 		}
 	}
 
+	// Set zero elements from last non-zero till the end
 	for i := fill_index; i < len(arr); i++ {
 		arr[i] = 0
 	}
@@ -30,7 +32,6 @@ func main() {
 	var arr = []int{0, 1, 2, 3, 40, 0, 2, 3, 0}
 
 	fmt.Println(arr)
-	move_zeros_to_end(arr)
+	moveZerosToEnd(arr)
 	fmt.Println(arr)
 }
-
