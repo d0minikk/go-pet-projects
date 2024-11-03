@@ -25,4 +25,6 @@ go test
 ```
 
 
+## Used
 
+DeepEqual from reflect package for two slices comparision. [Here](https://pkg.go.dev/reflect#DeepEqual) is the documentation.
