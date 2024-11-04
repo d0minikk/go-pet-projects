@@ -3,33 +3,21 @@ package main
 import (
 	"fmt"
 	"net/http"
+
+	"ex3-rest/handlers"
 	"github.com/gorilla/mux"
 )
 
-func ReadBookHandler(writer http.ResponseWriter, request *http.Request) {
-	vars := mux.Vars(request)
-	id := vars["id"]
-	fmt.Println("Requested book with id %s", id)
-}
-
-func ReadBooksHandler(writer http.ResponseWriter, request *http.Request) {
-	fmt.Println("Starting ReadBooksHandler")
-}
-
-func CreateBookHandler(writer http.ResponseWriter, request *http.Request) {
-	fmt.Println("Starting CreateBookHandler")
-}
-
-func UpdateBookHandler(writer http.ResponseWriter, request *http.Request) {
-	fmt.Println("Starting UpdateBookHandler")
-}
 
 func main() {
 	router := mux.NewRouter()
-	router.HandleFunc("/books/{id:[0-9]+}", ReadBookHandler).Methods("GET")
-	router.HandleFunc("/books/{id:[0-9]+}", UpdateBookHandler).Methods("PUT")
-	router.HandleFunc("/books", ReadBooksHandler).Methods("GET")
-	router.HandleFunc("/books", CreateBookHandler).Methods("POST")
 
-	http.ListenAndServe(":80", router)
+	router.HandleFunc("/books", handlers.ReadBooksHandler).Methods("GET")
+	router.HandleFunc("/books", handlers.CreateBookHandler).Methods("POST")
+	router.HandleFunc("/books/{id:[0-9]+}", handlers.ReadBookHandler).Methods("GET")
+	router.HandleFunc("/books/{id:[0-9]+}", handlers.UpdateBookHandler).Methods("PUT")
+
+	port := "8080"
+	fmt.Printf("Server is running on port %s\n", port)
+	http.ListenAndServe(":"+port, router)
 }
